@@ -1,0 +1,31 @@
+If you are asked to design the Freshr database, how and what would you do? Which database management system would you choose and why?
+
+First, modelize the entities.
+
+We have the user, with his preferences.
+We have the news articles.
+We have the discovery section, with steps (i'm curious about how you implemented it)
+As you fuel the company with ads, you should have an ads related section. I think, like the articles, with preferences to focus only some people.
+If you have classification models, I you may store their history in DB.
+We have the messages
+We have the commands that are translated from the mesaging service by the NLP module (CF q1.txt)
+
+Then the relations : 
+the user has preferences
+the user send messages with text/commands, and those correspond to a system command
+the user receive messages from Freshr, which can contain a link to an article
+the user can "navigate" through a discovery section with messages to
+the user has an ad profile
+ads can be sent to user as messages
+the articles can have a multiple parameters vector, predicted by a model each
+
+As you have strong relations, I would be going to a RDBMS. You use Postgres, it's nice for this use. Efficient, version 10 comes with enhancements for big data processing.
+It's an active and stable RDBMS, with a lot of tools. And since it supports JSON columns with indexing on json fields, NoSQL DB lose this advantage.
+Just take a look at this changelog -> https://wiki.postgresql.org/wiki/New_in_postgres_10
+
+Furthermore, the schema capabilities of Postgres should be used, in your case, to differentiate between bot services, maybe data analysis work and ads serving.
+Add to this the new european laws for GDPR and you have to be able to remove the traces of an user easily. Here comes the advantages of the Relational part.
+
+The choice for a No-relational DB could come if the user model became complex maybe. But that's not the current case.
+
+The q4.sql contains the resulting database. I omitted the Discovery part and let along the ads format.
