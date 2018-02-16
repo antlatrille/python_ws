@@ -1,0 +1,9 @@
+What do you think happens after a user clicks on a "Next" button in Freshr?
+
+Ensure the state : did the user click the link? Yes? Store something in DB to mark this article as read.
+Look for unread articles he could like into the almighty news bucket.
+Give it to him.
+
+In case of no new article available, answer him kindly that there is nothing left -> Here, Freshr in kinda bad. You answer "Did not understood".
+Your handling of recurring unread news is perfectible: just spam Next and you'll have the same 4-5 articles looping. 
+This could be taken in account here and say "Hey, I already told you this a few messages before, take a look 7 messages before."
