@@ -1,0 +1,33 @@
+Describe a recommendation system to recommend news to users. Which elements would you take into account? Which methods would you use?
+
+A Content based filtering seems like the best match for Freshr (https://en.wikipedia.org/wiki/Recommender_system#Content-based_filtering)
+
+Step 1 : article categorization
+Extract meaningful labels of an article (classification). Is this politics? tech? both?
+Assign each article a vector of those labels
+it would look something like Va(Politics: 0.2, Culture: 0.8, Science: 0.7, Sports: 0, People: 0)
+
+Step 2 : user preferences
+Generate a vector of preferences for your user, based on what he saw/what he clicked/what he didn't clicked/what he told he likes.
+
+Step 3 : fuuuuuuu-sion!
+Score a new article by classifying it (generate that vector of parameters) and combining it with the vector of preferences of the user with a cosine similarity.
+https://en.wikipedia.org/wiki/Cosine_similarity
+As the result will be [-1, 1], it allows to define a threshold upon which the article will be considered as "Recommendable" for this user.
+
+We could discuss the limits of this algorithm, but as it should be used to filter daily news (<1000 article?) for  particular user (on demand), it is enough.
+You have to compute the vector of parameters when uploading the article in the DB, and with either a saved function in PGsql or loading the user preferences at the request, you can compute fastly an array of scores for the unseen news for this user.
+
+it could look something like this :
+
+def get_recommendable_news(user_id, threshold=0.3):
+    preference_vector = get_preference_vector(user_id)
+    unseen_articles = get_unseen_articles(user_id, time_delta=[2 days])
+    scored_articles = [(a.id, cosine_similarity(preference_vector, a.parameters) for a in unseen_articles]
+    return sorted([t for t in scored_articles if t[1] >= threshold], key=lambda x: x[1]) # filter articles and sort them
+
+
+
+
+One could imagine a more powerful system, which retrieves keywords from an article (contextualization) to be able to emphasize some news that could be not ranked high enough.
+For example, if I don't care about politic but some law interests me, a better system would be able to know that i am interested on what politics say about this law.

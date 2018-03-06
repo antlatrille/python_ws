@@ -1,0 +1,36 @@
+How would I design a chatbot: 
+
+
+User <---> Messaging app <---> NLP module <---> API <---> do something
+                                                    <---> answer something
+                                                    <---> learning loop
+
+User <---> Messaging app : 
+    The bot interface, here we use Messenger. How the bot looks like and how do you interact with it
+
+Messaging app <---> NLP Module : 
+    Extract a system command (intents) with the context (data) to translate human language into something we can feed our system (like wit.ai)
+    This step can be useless if you just use the chatbot as a CLI and give direct commands (or if there are no linguistic data to extract from your answers)
+
+NLP Module <---> API :
+    Transfer the extracted data to our system to be processed (like wit.ai)
+
+API <---> stuff : 
+    Execute the business logic from the parameters (your api)
+
+
+<---> learning loop : 
+    Learn about how your user interacts with the bot and feed ML systems to adapt to his needs (make the NLP module evolve? Answer something else for the same command? Be more precise over specific parameters?)
+
+
+Once every block has been cleared, design the flow of the discussion. What can be asked, when, what should we answer? Yay, state machines!
+
+Then, what language do you support? English is easy, french can be hard, good luck with non-latin languages!
+
+After having designed the discussion skeleton, give meaningful answers to users. Find nice content. Be useful! -> Content teams, writers & stuff
+
+Once you have a nice tech stack and a clear content/interaction path, it's time to find how to monetize it. Yay, business models!
+
+While your bot is running, make sure the executed actions matches the user requests. That's the role of the learning loop. Wit.ai lets you handle this quite easily, where you can train and test your bot for given situations.
+
+Enrich your bot by giving him some personality : fun answers in the case of a millenial target is attractive.
